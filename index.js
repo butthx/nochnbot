@@ -10,7 +10,6 @@ if(!process.env.BOT_TOKEN){
 const bot = new Telegraf(String(process.env.BOT_TOKEN));
 bot.use(async (ctx,next) => {
   try{
-    await next();
     let dir = fs.readdirSync("./"); 
     let ignore = [];
     if(dir.includes("ignore.json")){
@@ -26,7 +25,7 @@ bot.use(async (ctx,next) => {
         await ctx.banChatSenderChat(ctx.message.sender_chat.id);
       }
     }
-    return true;
+    return next();
   }catch(error){ 
     ctx.replyWithHTML(`Sorry, i can't banned this person cause : <code>${error.message}</code>.\nPlease report this issue to developer (@butthxdiscuss) or open new issue in github!\nhttps://github.com/butthx/nochnbot`);
     return next();
