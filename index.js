@@ -36,17 +36,22 @@ bot.use(async (ctx,next) => {
 bot.start(ctx => {
   return ctx.replyWithHTML(`Hi, i can delete message from user which using channel to sending message. also this user banned that channel from your group, so the owner can't use it again for sending message in your group.\n\n<b>How to use?</b>\n<i>Just add me in your group! and make me an admin in your group with permission deleteMessages and banUsers!</i>\n\nSource Code : https://github.com/butthx/nochnbot`);
 });
+async function isAdmin(ctx){
+  let user = await ctx.getChatMember(ctx.message.from.id);
+  let allowed = ["creator","administrator"];
+  if(ctx.message.from.username == "GroupAnonymousBot"){
+    return true;
+  }
+  return allowed.includes(user.status);
+}
 bot.command("ignore",async (ctx)=>{
   try{ 
     let me = await ctx.getChatMember(ctx.botInfo.id); 
     if(me.status !== 'administrator'){
       return ctx.reply(`I am not admin in here!`);
     }
-    if(ctx.message.sender_chat.id !== ctx.message.chat.id){
-      let user = await ctx.getChatMember(ctx.message.from.id);
-      if(user.status !== "administrator" || user.status !== "creator"){
-        return ctx.reply(`are you admin in here?`);
-      }
+    if(!(await isAdmin(ctx))){
+      return ctx.reply(`are you admin in here?`); 
     }
     if(!ctx.message.reply_to_message){
       return ctx.replyWithHTML(`Please reply message from channel which using by user to sending message.`);
@@ -92,12 +97,9 @@ bot.command("unignore",async (ctx) => {
     if(me.status !== 'administrator'){
       return ctx.reply(`I am not admin in here!`);
     }
-    if(ctx.message.sender_chat.id !== ctx.message.chat.id){
-      let user = await ctx.getChatMember(ctx.message.from.id);
-      if(user.status !== "administrator" || user.status !== "creator"){
-        return ctx.reply(`are you admin in here?`);
-      }
-    }
+    if(!(await isAdmin(ctx))){
+      return ctx.reply(`are you admin in here?`); 
+    } 
     if(!ctx.message.reply_to_message){
       return ctx.replyWithHTML(`Please reply message from channel which using by user to sending message.`);
     }
