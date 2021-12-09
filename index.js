@@ -154,7 +154,7 @@ bot.catch((error,ctx)=>{
   try{
     return ctx.replyWithHTML(`Sorry, I can't work properly cause: <code>${error.message}</code>.\nPlease report this issue to developer (@butthxdiscuss) or open new issue in github!\nhttps://github.com/butthx/nochnbot`);
   }catch(e){
-    console.log(e);
+    return console.log(e);
   }
 });
 bot.launch();
