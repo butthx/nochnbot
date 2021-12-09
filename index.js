@@ -8,6 +8,7 @@ if(!process.env.BOT_TOKEN){
   process.exit(1);
 }
 const bot = new Telegraf(String(process.env.BOT_TOKEN));
+//app.use(bot.webhookCallback("/"));
 bot.use(async (ctx,next) => {
   try{
     if(ctx.chat.type == "private"){
@@ -46,6 +47,9 @@ async function isAdmin(ctx){
 }
 bot.command("ignore",async (ctx)=>{
   try{ 
+    if(ctx.chat.type == "private"){
+      return ctx.replyWithHTML(`This command only can use in groups!`);
+    }
     let me = await ctx.getChatMember(ctx.botInfo.id); 
     if(me.status !== 'administrator'){
       return ctx.reply(`I am not admin in here!`);
@@ -70,7 +74,8 @@ bot.command("ignore",async (ctx)=>{
         if(json[ctx.message.chat.id]){
           let data = json[ctx.message.chat.id];
           if(!data.includes(ctx.message.reply_to_message.sender_chat.id)){
-            json[ctx.message.chat.id] = data.push(ctx.message.reply_to_message.sender_chat.id);
+            data.push(ctx.message.reply_to_message.sender_chat.id);
+            json[ctx.message.chat.id] = data;
           }
         }else{
           json[ctx.message.chat.id] = [ctx.message.reply_to_message.sender_chat.id];
@@ -93,6 +98,9 @@ bot.command("ignore",async (ctx)=>{
 }); 
 bot.command("unignore",async (ctx) => {
   try{ 
+    if(ctx.chat.type == "private"){
+      return ctx.replyWithHTML(`This command only can use in groups!`);
+    }
     let me = await ctx.getChatMember(ctx.botInfo.id); 
     if(me.status !== 'administrator'){
       return ctx.reply(`I am not admin in here!`);
@@ -149,4 +157,7 @@ bot.catch((error,ctx)=>{
     console.log(e);
   }
 });
-bot.launch(); 
+bot.launch();
+//app.listen(process.env.PORT || 3000,()=>{
+//  return console.log("bot running")
+//});
