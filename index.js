@@ -10,16 +10,19 @@ if(!process.env.BOT_TOKEN){
 const bot = new Telegraf(String(process.env.BOT_TOKEN));
 bot.use(async (ctx,next) => {
   try{
-    let dir = fs.readdirSync("./"); 
-    let ignore = [];
-    if(dir.includes("ignore.json")){
-      let file = fs.readFileSync("./ignore.json","utf8");
-      let json = JSON.parse(file);
-      if(json[ctx.message.chat.id]){
-        ignore = json[ctx.message.chat.id];
-      }
+    if(ctx.chat.type == "private"){
+      return next();
     }
     if(ctx.message.sender_chat){
+      let dir = fs.readdirSync("./"); 
+      let ignore = [];
+      if(dir.includes("ignore.json")){
+        let file = fs.readFileSync("./ignore.json","utf8");
+        let json = JSON.parse(file);
+        if(json[ctx.message.chat.id]){
+          ignore = json[ctx.message.chat.id];
+        }
+      }
       if(ctx.message.sender_chat.type == "channel" && !ctx.message.is_automatic_forward && !ignore.includes(ctx.message.sender_chat.id)){
         await ctx.deleteMessage(ctx.message.message_id);
         await ctx.banChatSenderChat(ctx.message.sender_chat.id);
@@ -27,7 +30,6 @@ bot.use(async (ctx,next) => {
     }
     return next();
   }catch(error){ 
-    ctx.replyWithHTML(`Sorry, i can't banned this person cause : <code>${error.message}</code>.\nPlease report this issue to developer (@butthxdiscuss) or open new issue in github!\nhttps://github.com/butthx/nochnbot`);
     return next();
   }
 });
