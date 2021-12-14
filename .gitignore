@@ -105,3 +105,6 @@ dist
 
 #database 
 ignore.json
+
+#tsc 
+build
