@@ -2,6 +2,7 @@
 import GModel from "../schema/database"
 import {Composer,Context} from "grammy"
 import isAdmin from "../utils/isAdmin"
+import generateCache from "../utils/cache"
 export const bot = new Composer()
 async function unignoreFnText (ctx){
   try{
@@ -51,6 +52,7 @@ async function unignoreFnText (ctx){
     }
     //@ts-ignore
     data = await data.save()
+    generateCache()
     return ctx.api.editMessageText(msg.chat.id,msg.message_id,results,{
         parse_mode : "HTML"
       })
@@ -97,6 +99,7 @@ async function unignoreFnReply (ctx) {
       await ctx.banChatSenderChat(Number(chatId)) 
       //@ts-ignore
       data = await data.save()
+      generateCache()
       return ctx.api.editMessageText(msg.chat.id,msg.message_id,results,{
           parse_mode : "HTML"
         })

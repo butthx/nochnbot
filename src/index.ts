@@ -44,9 +44,7 @@ connect(String(process.env.MONGODB_URI)) // connecting to database
 generateCache() // create cache
 loadPlugins() // load all plugins
 bot.catch((error)=>{ // catching error
-  return error.ctx.reply(error.message,{
-    reply_to_message_id : error.ctx.message?.message_id
-  })
+  return error.ctx.reply(error.message)
 })
 bot.start() // running bot
 //app.listen(process.env.PORT || 3000) // running bot
