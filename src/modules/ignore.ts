@@ -14,7 +14,8 @@ async function ignoreFnText (ctx){
     let results = `<b>Ignoring ${text.length} channels.</b>`
     let msg = await ctx.reply(results,{
       reply_to_message_id : ctx.message?.message_id,
-      parse_mode : "HTML"
+      parse_mode : "HTML",
+      allow_sending_without_reply: true
     })
     if(data == null){
       let Data = new GModel()
@@ -39,6 +40,7 @@ async function ignoreFnText (ctx){
       }else{
         results += `\n<b>${chatId}</b> - already`
       }
+      await ctx.banChatSenderChat(Number(chatId));
       await ctx.unbanChatSenderChat(Number(chatId))
       continue;
     }
@@ -50,7 +52,8 @@ async function ignoreFnText (ctx){
       })
   }catch(error:any){
     return ctx.reply(error.message,{
-      reply_to_message_id : ctx.message?.message_id
+      reply_to_message_id : ctx.message?.message_id,
+      allow_sending_without_reply: true
     })
   }
 }
@@ -64,7 +67,8 @@ async function ignoreFnReply (ctx) {
       let results = `<b>Ignoring 1 channels.</b>`
       let msg = await ctx.reply(results,{
         reply_to_message_id : ctx.message?.message_id,
-        parse_mode : "HTML"
+        parse_mode : "HTML",
+        allow_sending_without_reply: true
       }) 
       if(data == null){
         let Data = new GModel()
@@ -80,6 +84,7 @@ async function ignoreFnReply (ctx) {
       }else{
         results += `\n<b>${chatId}</b> - already`
       }
+      await ctx.banChatSenderChat(Number(chatId)) 
       await ctx.unbanChatSenderChat(Number(chatId)) 
       //@ts-ignore
       data = await data.save()
@@ -90,11 +95,13 @@ async function ignoreFnReply (ctx) {
     }
     return ctx.reply(`<b>Ignoring Channel.</b>\nTo ignoring channel you can :\n<b>-</b> Reply message from channel with <code>/ignore</code>\n<b>-</b> Send <code>/ignore [chatId]</code> with channel id. Channel id must be a number, not a username. Example : <code>/ignore -1001234567890 -1002345678901 -1003456789012</code>. For multiple channel, separate channelId with spaces like example.`,{
       parse_mode : "HTML",
-      reply_to_message_id : ctx.message?.message_id
+      reply_to_message_id : ctx.message?.message_id,
+      allow_sending_without_reply: true
     })
   }catch(error:any){
     return ctx.reply(error.message,{
-      reply_to_message_id : ctx.message?.message_id
+      reply_to_message_id : ctx.message?.message_id,
+      allow_sending_without_reply: true
     })
   }
 }
@@ -105,7 +112,8 @@ async function ignoreFn (ctx) {
     if(text.length > 0){ 
       if(!await isAdmin(ctx)){
         return ctx.reply(`Are you admin?`,{
-          reply_to_message_id : ctx.message?.message_id
+          reply_to_message_id : ctx.message?.message_id,
+          allow_sending_without_reply: true
         })
       }
       return ignoreFnText(ctx)
@@ -113,18 +121,21 @@ async function ignoreFn (ctx) {
     if(ctx.message?.reply_to_message){ 
       if(!await isAdmin(ctx)){
         return ctx.reply(`Are you admin?`,{
-          reply_to_message_id : ctx.message?.message_id
+          reply_to_message_id : ctx.message?.message_id,
+          allow_sending_without_reply: true
         })
       }
       return ignoreFnReply(ctx)
     }
     return ctx.reply(`<b>Ignoring Channel.</b>\nTo ignoring channel you can :\n<b>-</b> Reply message from channel with <code>/ignore</code>\n<b>-</b> Send <code>/ignore [chatId]</code> with channel id. Channel id must be a number, not a username. Example : <code>/ignore -1001234567890 -1002345678901 -1003456789012</code>. For multiple channel, separate channelId with spaces like example.`,{
       parse_mode : "HTML",
-      reply_to_message_id : ctx.message?.message_id
+      reply_to_message_id : ctx.message?.message_id,
+      allow_sending_without_reply: true
     })
   }catch(error:any){
     return ctx.reply(error.message,{
-      reply_to_message_id : ctx.message?.message_id
+      reply_to_message_id : ctx.message?.message_id,
+      allow_sending_without_reply: true
     })
   }
 }
@@ -137,16 +148,19 @@ bot.command("ignorelist",async (ctx)=>{
     if(data == null){
       return ctx.reply(`<b>No ignore list.</b>`,{
         reply_to_message_id : ctx.message?.message_id,
-        parse_mode : "HTML"
+        parse_mode : "HTML",
+        allow_sending_without_reply: true
       })
     } 
     return ctx.reply(`<code>${data.ignore.join(" ")}</code>`,{
         reply_to_message_id : ctx.message?.message_id,
-        parse_mode : "HTML"
+        parse_mode : "HTML",
+        allow_sending_without_reply: true
       })
   }catch(error:any){
     return ctx.reply(error.message,{
-      reply_to_message_id : ctx.message?.message_id
+      reply_to_message_id : ctx.message?.message_id,
+      allow_sending_without_reply: true
     })
   }
 })

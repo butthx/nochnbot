@@ -36,7 +36,8 @@ bot.command("import",async (ctx)=>{
   }
   }catch(error:any){
     return ctx.reply(error.message,{
-      reply_to_message_id : ctx.message?.message_id
+      reply_to_message_id : ctx.message?.message_id,
+      allow_sending_without_reply: true
     })
   }
 })

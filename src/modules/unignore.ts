@@ -14,7 +14,8 @@ async function unignoreFnText (ctx){
     let results = `<b>Unignoring ${text.length} channels.</b>`
     let msg = await ctx.reply(results,{
       reply_to_message_id : ctx.message?.message_id,
-      parse_mode : "HTML"
+      parse_mode : "HTML",
+      allow_sending_without_reply: true
     })
     if(data == null){
       let Data = new GModel()
@@ -58,7 +59,8 @@ async function unignoreFnText (ctx){
       })
   }catch(error:any){
     return ctx.reply(error.message,{
-      reply_to_message_id : ctx.message?.message_id
+      reply_to_message_id : ctx.message?.message_id,
+      allow_sending_without_reply: true
     })
   }
 }
@@ -72,7 +74,8 @@ async function unignoreFnReply (ctx) {
       let results = `<b>Uningnore 1 channels.</b>`
       let msg = await ctx.reply(results,{
         reply_to_message_id : ctx.message?.message_id,
-        parse_mode : "HTML"
+        parse_mode : "HTML",
+        allow_sending_without_reply: true
       }) 
       if(data == null){
         let Data = new GModel()
@@ -106,11 +109,13 @@ async function unignoreFnReply (ctx) {
     }
     return ctx.reply(`<b>Unignoring Channel.</b>\nTo unignoring channel you can :\n<b>-</b> Reply message from channel with <code>/unignore</code>\n<b>-</b> Send <code>/unignore [chatId]</code> with channel id. Channel id must be a number, not a username. Example : <code>/unignore -1001234567890 -1002345678901 -1003456789012</code>. For multiple channel, separate channelId with spaces like example.`,{
       parse_mode : "HTML",
-      reply_to_message_id : ctx.message?.message_id
+      reply_to_message_id : ctx.message?.message_id,
+      allow_sending_without_reply: true
     })
   }catch(error:any){
     return ctx.reply(error.message,{
-      reply_to_message_id : ctx.message?.message_id
+      reply_to_message_id : ctx.message?.message_id,
+      allow_sending_without_reply: true
     })
   }
 }
@@ -121,7 +126,8 @@ async function unignoreFn (ctx) {
     if(text.length > 0){ 
       if(!await isAdmin(ctx)){
         return ctx.reply(`Are you admin?`,{
-          reply_to_message_id : ctx.message?.message_id
+          reply_to_message_id : ctx.message?.message_id,
+          allow_sending_without_reply: true
         })
       }
       return unignoreFnText(ctx)
@@ -129,18 +135,21 @@ async function unignoreFn (ctx) {
     if(ctx.message?.reply_to_message){ 
       if(!await isAdmin(ctx)){
         return ctx.reply(`Are you admin?`,{
-          reply_to_message_id : ctx.message?.message_id
+          reply_to_message_id : ctx.message?.message_id,
+          allow_sending_without_reply: true
         })
       }
       return unignoreFnReply(ctx)
     }
     return ctx.reply(`<b>Unignoring Channel.</b>\nTo unignoring channel you can :\n<b>-</b> Reply message from channel with <code>/unignore</code>\n<b>-</b> Send <code>/unignore [chatId]</code> with channel id. Channel id must be a number, not a username. Example : <code>/unignore -1001234567890 -1002345678901 -1003456789012</code>. For multiple channel, separate channelId with spaces like example.`,{
       parse_mode : "HTML",
-      reply_to_message_id : ctx.message?.message_id
+      reply_to_message_id : ctx.message?.message_id,
+      allow_sending_without_reply: true
     })
   }catch(error:any){
     return ctx.reply(error.message,{
-      reply_to_message_id : ctx.message?.message_id
+      reply_to_message_id : ctx.message?.message_id,
+      allow_sending_without_reply: true
     })
   }
 }
