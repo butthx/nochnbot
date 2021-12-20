@@ -18,8 +18,8 @@ if(!process.env.MONGODB_URI){
 
 const app = express()
 const bot = new Bot(String(process.env.BOT_TOKEN))
-//app.use(express.json())
-//app.use(webhookCallback(bot))
+app.use(express.json())
+app.use(webhookCallback(bot))
 
 async function loadPlugins(){
   let dirname:string = path.join(__dirname,"modules")
@@ -46,6 +46,6 @@ loadPlugins() // load all plugins
 bot.catch((error)=>{ // catching error
   return error.ctx.reply(error.message)
 })
-bot.start() // running bot
-//app.listen(process.env.PORT || 3000) // running bot
+//bot.start() // running bot
+app.listen(process.env.PORT || 3000) // running bot
 console.log("bot running.")
