@@ -1,6 +1,6 @@
 // this file is part of https://github.com/butthx/nochnbot.
-import {Context} from "grammy"
-export default async function isAdmin (ctx:Context){
+import { Context } from "grammy";
+export default async function isAdmin(ctx: Context) {
   let allowed = ["creator", "administrator"];
   if (ctx.from?.username == "GroupAnonymousBot") {
     return true;
