@@ -49,6 +49,8 @@ bot.catch((error) => {
   // catching error
   return error.ctx.reply(error.message);
 });
-bot.start();
+bot.start({
+  drop_pending_updates: false,
+});
 app.listen(process.env.PORT || 3000);
 console.log('bot running.');
