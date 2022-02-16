@@ -1,10 +1,11 @@
 // this file is part of https://github.com/butthx/nochnbot.
 
-import { Schema, model, Document } from "mongoose";
+import { Schema, model, Document } from 'mongoose';
 
 export interface GInterface extends Document {
   chatId: string;
   ignore: Array<string>;
+  log?: string;
 }
 export const GSchema = new Schema({
   chatId: {
@@ -15,9 +16,12 @@ export const GSchema = new Schema({
     type: Array,
     default: new Array(),
   },
+  log: {
+    type: String,
+  },
 });
-GSchema.set("strict", false);
-GSchema.set("timestamps", true);
+GSchema.set('strict', false);
+GSchema.set('timestamps', true);
 
-const GModel = model<GInterface>("groups", GSchema);
+const GModel = model<GInterface>('groups', GSchema);
 export default GModel;

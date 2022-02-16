@@ -1,11 +1,11 @@
 // this file is part of https://github.com/butthx/nochnbot.
-import dotenv from "dotenv";
-import { connect } from "mongoose";
-import { Bot, webhookCallback, Composer } from "grammy";
-import express from "express";
-import path from "path";
-import fs from "fs";
-import generateCache from "./utils/cache";
+import dotenv from 'dotenv';
+import { connect } from 'mongoose';
+import { Bot, webhookCallback, Composer } from 'grammy';
+import express from 'express';
+import path from 'path';
+import fs from 'fs';
+import generateCache from './utils/cache';
 
 dotenv.config();
 
@@ -20,11 +20,14 @@ const app = express();
 const bot = new Bot(String(process.env.BOT_TOKEN));
 //app.use(express.json())
 //app.use(webhookCallback(bot))
-
+app.get('/', (req, res) => {
+  res.status(200);
+  return res.send('Working');
+});
 async function loadPlugins() {
-  let dirname: string = path.join(__dirname, "modules");
+  let dirname: string = path.join(__dirname, 'modules');
   let fileList: Array<string> = fs.readdirSync(dirname);
-  fileList.filter((file) => file.endsWith(".js") || file.endsWith(".ts"));
+  fileList.filter((file) => file.endsWith('.js') || file.endsWith('.ts'));
   for (let fileName of fileList) {
     let file = path.join(dirname, fileName);
     const plugins = require(file);
@@ -46,6 +49,6 @@ bot.catch((error) => {
   // catching error
   return error.ctx.reply(error.message);
 });
-bot.start(); // running bot
-//app.listen(process.env.PORT || 3000) // running bot
-console.log("bot running.");
+bot.start();
+app.listen(process.env.PORT || 3000);
+console.log('bot running.');
