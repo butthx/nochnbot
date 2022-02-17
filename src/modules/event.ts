@@ -90,27 +90,27 @@ bot.on('message:new_chat_members', (ctx) => {
             inline_keyboard: [
               [
                 {
-                  text: 'Help',
+                  text: '❓ Help',
                   callback_data: 'help',
                 },
                 {
-                  text: 'Privacy Policy',
+                  text: '🔒 Privacy Policy',
                   callback_data: 'privacy',
                 },
               ],
               [
                 {
-                  text: 'Source',
+                  text: '📦 Source',
                   url: 'https://github.com/butthx/nochnbot',
                 },
                 {
-                  text: 'Support',
+                  text: '🧚🏻‍♂️ Support',
                   url: 'https://t.me/butthxdiscuss',
                 },
               ],
               [
                 {
-                  text: 'Channel',
+                  text: '🗞️ Channel',
                   url: 'https://t.me/butthxforward',
                 },
               ],

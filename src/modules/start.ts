@@ -3,7 +3,7 @@ import GModel from '../schema/database';
 import { Composer, Context } from 'grammy';
 import isAdmin from '../utils/isAdmin';
 export const bot = new Composer();
-const start_message = `Hi, i can delete message from user which using channel to sending message. also this user banned that channel from your group, so the owner can't use it again for sending message in your group.\nSource Code : https://github.com/butthx/nochnbot\nSupport Group : @butthxdiscuss`;
+const start_message = `Hi, i can delete message from user which using channel to sending message. also this user banned that channel from your group, so the owner can't use it again for sending message in your group.`;
 bot.callbackQuery('start', (ctx) => {
   return ctx.editMessageText(start_message, {
     parse_mode: 'HTML',
@@ -11,27 +11,27 @@ bot.callbackQuery('start', (ctx) => {
       inline_keyboard: [
         [
           {
-            text: 'Help',
+            text: '❓ Help',
             callback_data: 'help',
           },
           {
-            text: 'Privacy Policy',
+            text: '🔒 Privacy Policy',
             callback_data: 'privacy',
           },
         ],
         [
           {
-            text: 'Source',
+            text: '📦 Source',
             url: 'https://github.com/butthx/nochnbot',
           },
           {
-            text: 'Support',
+            text: '🧚🏻‍♂️ Support',
             url: 'https://t.me/butthxdiscuss',
           },
         ],
         [
           {
-            text: 'Channel',
+            text: '🗞️ Channel',
             url: 'https://t.me/butthxforward',
           },
         ],
@@ -48,27 +48,27 @@ bot.command('start', (ctx) => {
       inline_keyboard: [
         [
           {
-            text: 'Help',
+            text: '❓ Help',
             callback_data: 'help',
           },
           {
-            text: 'Privacy Policy',
+            text: '🔒 Privacy Policy',
             callback_data: 'privacy',
           },
         ],
         [
           {
-            text: 'Source',
+            text: '📦 Source',
             url: 'https://github.com/butthx/nochnbot',
           },
           {
-            text: 'Support',
+            text: '🧚🏻‍♂️ Support',
             url: 'https://t.me/butthxdiscuss',
           },
         ],
         [
           {
-            text: 'Channel',
+            text: '🗞️ Channel',
             url: 'https://t.me/butthxforward',
           },
         ],

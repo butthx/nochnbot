@@ -20,7 +20,8 @@ const help_message = `1. add me in your group.
 /ignore - ✅ unban and allow that user to sending message as channel (admin only).
 /ignorelist - 📋 get list ignored channel.
 /unignore - ⛔️ ban an unallow that user to sending message as channel (admin only).
-/setlog - 🗞️ setting log chat (admin only).`;
+/setlog - 🗞️ setting log chat (admin only).
+/unsetlog - 🗑️ remove the log chat (admin only).`;
 bot.callbackQuery('help', (ctx) => {
   return ctx.editMessageText(help_message, {
     parse_mode: 'HTML',
@@ -28,7 +29,7 @@ bot.callbackQuery('help', (ctx) => {
       inline_keyboard: [
         [
           {
-            text: 'back',
+            text: 'Back',
             callback_data: 'start',
           },
         ],

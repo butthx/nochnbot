@@ -11,7 +11,7 @@ bot.callbackQuery('privacy', (ctx) => {
       inline_keyboard: [
         [
           {
-            text: 'back',
+            text: 'Back',
             callback_data: 'start',
           },
         ],
