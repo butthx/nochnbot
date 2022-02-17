@@ -3,37 +3,37 @@ import GModel from '../schema/database';
 import { Composer, Context } from 'grammy';
 import isAdmin from '../utils/isAdmin';
 export const bot = new Composer();
-const start_keyboard: [
+const start_keyboard = [
   [
     {
-      text: '❓ Help';
-      callback_data: 'help';
+      text: '❓ Help',
+      callback_data: 'help',
     },
     {
-      text: '🔒 Privacy Policy';
-      callback_data: 'privacy';
-    }
+      text: '🔒 Privacy Policy',
+      callback_data: 'privacy',
+    },
   ],
   [
     {
-      text: '📦 Source';
-      url: 'https://github.com/butthx/nochnbot';
+      text: '📦 Source',
+      url: 'https://github.com/butthx/nochnbot',
     },
     {
-      text: '🧚🏻‍♂️ Support';
-      url: 'https://t.me/butthxdiscuss';
-    }
+      text: '🧚🏻‍♂️ Support',
+      url: 'https://t.me/butthxdiscuss',
+    },
   ],
   [
     {
-      text: '🗞️ Channel';
-      url: 'https://t.me/butthxforward';
+      text: '🗞️ Channel',
+      url: 'https://t.me/butthxforward',
     },
     {
-      text: '⭐ Give Star';
-      callback_data: 'star';
-    }
-  ]
+      text: '⭐ Give Star',
+      callback_data: 'star',
+    },
+  ],
 ];
 const start_message = `Hi, i can delete message from user which using channel to sending message. also this user banned that channel from your group, so the owner can't use it again for sending message in your group.`;
 bot.callbackQuery('start', (ctx) => {
