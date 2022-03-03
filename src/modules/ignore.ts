@@ -152,15 +152,6 @@ async function ignoreFn(ctx) {
   try {
     let text = remove(String(ctx.message?.text).split(' '));
     if (text.length > 0) {
-      /*if (text.length > 10) {
-        return ctx.reply(
-          `The list of chatId is redundant, max 10 chatId at a same time.`,
-          {
-            reply_to_message_id: ctx.message?.message_id,
-            allow_sending_without_reply: true,
-          }
-        );
-      }*/
       if (ctx.chat?.type == 'private') {
         return ctx.reply(`This command only can use in groups!`, {
           reply_to_message_id: ctx.message?.message_id,

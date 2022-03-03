@@ -23,24 +23,32 @@ const help_message = `1. add me in your group.
 /setlog - 🗞️ setting log chat (admin only).
 /unsetlog - 🗑️ remove the log chat (admin only).`;
 bot.callbackQuery('help', (ctx) => {
-  return ctx.editMessageText(help_message, {
-    parse_mode: 'HTML',
-    reply_markup: {
-      inline_keyboard: [
-        [
-          {
-            text: 'Back',
-            callback_data: 'start',
-          },
+  try {
+    return ctx.editMessageText(help_message, {
+      parse_mode: 'HTML',
+      reply_markup: {
+        inline_keyboard: [
+          [
+            {
+              text: 'Back',
+              callback_data: 'start',
+            },
+          ],
         ],
-      ],
-    },
-  });
+      },
+    });
+  } catch (error) {
+    return error;
+  }
 });
 bot.command('help', (ctx) => {
-  return ctx.reply(help_message, {
-    parse_mode: 'HTML',
-    reply_to_message_id: ctx.message?.message_id,
-    allow_sending_without_reply: true,
-  });
+  try {
+    return ctx.reply(help_message, {
+      parse_mode: 'HTML',
+      reply_to_message_id: ctx.message?.message_id,
+      allow_sending_without_reply: true,
+    });
+  } catch (error) {
+    return error;
+  }
 });

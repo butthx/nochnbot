@@ -37,47 +37,59 @@ const start_keyboard = [
 ];
 const start_message = `Hi, i can delete message from user which using channel to sending message. also this user banned that channel from your group, so the owner can't use it again for sending message in your group.`;
 bot.callbackQuery('start', (ctx) => {
-  return ctx.editMessageText(start_message, {
-    parse_mode: 'HTML',
-    reply_markup: {
-      inline_keyboard: start_keyboard,
-    },
-  });
+  try {
+    return ctx.editMessageText(start_message, {
+      parse_mode: 'HTML',
+      reply_markup: {
+        inline_keyboard: start_keyboard,
+      },
+    });
+  } catch (error) {
+    return error;
+  }
 });
 bot.command('start', (ctx) => {
-  return ctx.reply(start_message, {
-    parse_mode: 'HTML',
-    reply_to_message_id: ctx.message?.message_id,
-    allow_sending_without_reply: true,
-    reply_markup: {
-      inline_keyboard: start_keyboard,
-    },
-  });
+  try {
+    return ctx.reply(start_message, {
+      parse_mode: 'HTML',
+      reply_to_message_id: ctx.message?.message_id,
+      allow_sending_without_reply: true,
+      reply_markup: {
+        inline_keyboard: start_keyboard,
+      },
+    });
+  } catch (error) {
+    return error;
+  }
 });
 bot.callbackQuery('star', async (ctx) => {
-  return ctx.editMessageText(
-    `If you like this bot, please give five star.\nThanks you for using this bot.`,
-    {
-      reply_markup: {
-        inline_keyboard: [
-          [
-            {
-              text: 'Bots Archive',
-              url: 'https://t.me/BotsArchive/2350',
-            },
-            {
-              text: 'Telegramic',
-              url: 'https://t.me/tlgrmcbot?start=nochannel_robot-review',
-            },
+  try {
+    return ctx.editMessageText(
+      `If you like this bot, please give five star.\nThanks you for using this bot.`,
+      {
+        reply_markup: {
+          inline_keyboard: [
+            [
+              {
+                text: 'Bots Archive',
+                url: 'https://t.me/BotsArchive/2350',
+              },
+              {
+                text: 'Telegramic',
+                url: 'https://t.me/tlgrmcbot?start=nochannel_robot-review',
+              },
+            ],
+            [
+              {
+                text: 'Back',
+                callback_data: 'start',
+              },
+            ],
           ],
-          [
-            {
-              text: 'Back',
-              callback_data: 'start',
-            },
-          ],
-        ],
-      },
-    }
-  );
+        },
+      }
+    );
+  } catch (error) {
+    return error;
+  }
 });

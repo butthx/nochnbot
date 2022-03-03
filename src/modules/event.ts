@@ -77,47 +77,51 @@ bot.use(async (ctx, next) => {
   }
 });
 bot.on('message:new_chat_members', (ctx) => {
-  if (ctx.message?.new_chat_members) {
-    let u = ctx.message.new_chat_members[0];
-    if (u.id == ctx.me.id) {
-      return ctx.reply(
-        `Hi Thanks you for adding me, i can delete message from user which using channel to sending message. also this user banned that channel from your group, so the owner can't use it again for sending message in your group.\nSource Code : https://github.com/butthx/nochnbot\nSupport Group : @butthxdiscuss`,
-        {
-          parse_mode: 'HTML',
-          reply_to_message_id: ctx.message?.message_id,
-          allow_sending_without_reply: true,
-          reply_markup: {
-            inline_keyboard: [
-              [
-                {
-                  text: '❓ Help',
-                  callback_data: 'help',
-                },
-                {
-                  text: '🔒 Privacy Policy',
-                  callback_data: 'privacy',
-                },
+  try {
+    if (ctx.message?.new_chat_members) {
+      let u = ctx.message.new_chat_members[0];
+      if (u.id == ctx.me.id) {
+        return ctx.reply(
+          `Hi Thanks you for adding me, i can delete message from user which using channel to sending message. also this user banned that channel from your group, so the owner can't use it again for sending message in your group.\nSource Code : https://github.com/butthx/nochnbot\nSupport Group : @butthxdiscuss`,
+          {
+            parse_mode: 'HTML',
+            reply_to_message_id: ctx.message?.message_id,
+            allow_sending_without_reply: true,
+            reply_markup: {
+              inline_keyboard: [
+                [
+                  {
+                    text: '❓ Help',
+                    callback_data: 'help',
+                  },
+                  {
+                    text: '🔒 Privacy Policy',
+                    callback_data: 'privacy',
+                  },
+                ],
+                [
+                  {
+                    text: '📦 Source',
+                    url: 'https://github.com/butthx/nochnbot',
+                  },
+                  {
+                    text: '🧚🏻‍♂️ Support',
+                    url: 'https://t.me/butthxdiscuss',
+                  },
+                ],
+                [
+                  {
+                    text: '🗞️ Channel',
+                    url: 'https://t.me/butthxforward',
+                  },
+                ],
               ],
-              [
-                {
-                  text: '📦 Source',
-                  url: 'https://github.com/butthx/nochnbot',
-                },
-                {
-                  text: '🧚🏻‍♂️ Support',
-                  url: 'https://t.me/butthxdiscuss',
-                },
-              ],
-              [
-                {
-                  text: '🗞️ Channel',
-                  url: 'https://t.me/butthxforward',
-                },
-              ],
-            ],
-          },
-        }
-      );
+            },
+          }
+        );
+      }
     }
+  } catch (error) {
+    return error;
   }
 });

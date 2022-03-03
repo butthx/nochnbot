@@ -46,8 +46,11 @@ connect(String(process.env.MONGODB_URI)); // connecting to database
 generateCache(); // create cache
 loadPlugins(); // load all plugins
 bot.catch((error) => {
-  // catching error
-  return error.ctx.reply(error.message);
+  try {
+    return error.ctx.reply(error.message);
+  } catch (err) {
+    return err;
+  }
 });
 bot.start({
   drop_pending_updates: false,
