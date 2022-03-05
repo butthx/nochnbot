@@ -15,15 +15,8 @@ if (!process.env.BOT_TOKEN) {
 if (!process.env.MONGODB_URI) {
   throw new Error('"env.MONGODB_URI" is missing.');
 }
-
-const app = express();
 const bot = new Bot(String(process.env.BOT_TOKEN));
-//app.use(express.json())
-//app.use(webhookCallback(bot))
-app.get('/', (req, res) => {
-  res.status(200);
-  return res.send('Working');
-});
+const FORCE_POLLING = ["heroku","railway"]
 async function loadPlugins() {
   let dirname: string = path.join(__dirname, 'modules');
   let fileList: Array<string> = fs.readdirSync(dirname);
@@ -55,5 +48,20 @@ bot.catch((error) => {
 bot.start({
   drop_pending_updates: false,
 });
-app.listen(process.env.PORT || 3000);
+const getBool = (env?:String){
+  if(env){
+    let _env = String(env).toLowerCase().trim()
+    if(_env == "true") return true 
+    return false
+  } 
+  return false
+}
+if(getBool(process.env.WITH_EXPRESS)){
+  const app = express();
+  app.get('/', (req, res) => {
+    res.status(200);
+    return res.send('Working');
+  });
+  app.listen(process.env.PORT || 3000);
+}
 console.log('bot running.');

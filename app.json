@@ -1,0 +1,16 @@
+{
+  "name": "nochnbot",
+  "description": "Deploy your clone!",
+  "website": "https://github.com/butthx/nochnbot#readme",
+  "repository": "https://github.com/butthx/nochnbot",
+  "env": {
+    "BOT_TOKEN": {
+      "description": "Your bot token, get it from botFather.",
+      "required" : true
+    },
+   "MONGODB_URI": {
+      "description": "Your mongodbURI.",
+      "required" : true
+    }
+  }
+}
