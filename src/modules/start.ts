@@ -21,13 +21,13 @@ const start_keyboard = [
     },
     {
       text: '🧚🏻‍♂️ Support',
-      url: 'https://t.me/butthxdiscuss',
+      url: process.env.GROUP_URL ?? 'https://t.me/butthxdiscuss',
     },
   ],
   [
     {
       text: '🗞️ Channel',
-      url: 'https://t.me/butthxforward',
+      url: process.env.CHANNEL_URL ?? 'https://t.me/butthxforward',
     },
     {
       text: '⭐ Give Star',

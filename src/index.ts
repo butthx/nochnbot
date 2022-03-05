@@ -48,7 +48,7 @@ bot.catch((error) => {
 bot.start({
   drop_pending_updates: false,
 });
-const getBool = (env?:String){
+const getBool = (env?:String) => {
   if(env){
     let _env = String(env).toLowerCase().trim()
     if(_env == "true") return true 

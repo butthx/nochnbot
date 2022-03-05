@@ -11,6 +11,16 @@
    "MONGODB_URI": {
       "description": "Your mongodbURI.",
       "required" : true
+    },
+    "CHANNEL_URL": {
+      "description": "Your Channel Url",
+      "required" : true,
+      "value" : "https://t.me/butthxforward"
+    },
+    "GROUP_URL" : {
+      "description" : "Your Group Url",
+      "required" : true,
+      "value" : "https://t.me/butthxdiscuss"
     }
   }
 }
