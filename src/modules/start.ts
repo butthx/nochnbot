@@ -3,7 +3,7 @@ import GModel from '../schema/database';
 import { Composer, Context } from 'grammy';
 import isAdmin from '../utils/isAdmin';
 export const bot = new Composer();
-const start_keyboard = [
+let start_keyboard = [
   [
     {
       text: '❓ Help',
@@ -29,15 +29,20 @@ const start_keyboard = [
       text: '🗞️ Channel',
       url: process.env.CHANNEL_URL ?? 'https://t.me/butthxforward',
     },
-    {
-      text: '⭐ Give Star',
-      callback_data: 'star',
-    },
   ],
 ];
-const start_message = `Hi, i can delete message from user which using channel to sending message. also this user banned that channel from your group, so the owner can't use it again for sending message in your group.`;
+let start_message = `Hi, i can delete message from user which using channel to sending message. also this user banned that channel from your group, so the owner can't use it again for sending message in your group.`;
 bot.callbackQuery('start', (ctx) => {
   try {
+    if (ctx.me.id === 5093059646) {
+      //@ts-ignore
+      start_keyboard[2].push({
+        text: '⭐ Give Star',
+        callback_data: 'star',
+      });
+    } else {
+      start_message += `\n\n<i>This bot is using source code of @nochannel_robot.</i>`;
+    }
     return ctx.editMessageText(start_message, {
       parse_mode: 'HTML',
       reply_markup: {
@@ -50,6 +55,15 @@ bot.callbackQuery('start', (ctx) => {
 });
 bot.command('start', (ctx) => {
   try {
+    if (ctx.me.id === 5093059646) {
+      //@ts-ignore
+      start_keyboard[2].push({
+        text: '⭐ Give Star',
+        callback_data: 'star',
+      });
+    } else {
+      start_message += `\n\n<i>This bot is using source code of @nochannel_robot.</i>`;
+    }
     return ctx.reply(start_message, {
       parse_mode: 'HTML',
       reply_to_message_id: ctx.message?.message_id,

@@ -63,6 +63,18 @@ bot.command('setlog', async (ctx) => {
           data = new GModel();
           data.chatId = String(ctx.chat?.id);
         }
+        try {
+          if (data.log !== undefined) {
+            await ctx.api.sendMessage(
+              data.log!,
+              `This log chat has already changed for <code>${ctx.chat?.id}</code>. Changed by <code>${ctx.from?.id}</code>. All message log will be sending in a new <code>${forward_from_chat?.type}</code> log and it have a protect content.`,
+              {
+                parse_mode: 'HTML',
+                protect_content: true,
+              }
+            );
+          }
+        } catch (error) {}
         data.log = String(forward_from_chat?.id);
         data = await data.save();
         generateCache();
@@ -121,6 +133,18 @@ bot.callbackQuery(/setlog (.*)/, async (ctx) => {
           data = new GModel();
           data.chatId = String(ctx.chat?.id);
         }
+        try {
+          if (data.log !== undefined) {
+            await ctx.api.sendMessage(
+              data.log!,
+              `This log chat has already changed for <code>${ctx.chat?.id}</code>. Changed by <code>${ctx.from?.id}</code>. All message log will be sending in a new <code>${forward_from_chat?.type}</code> log and it have a protect content.`,
+              {
+                parse_mode: 'HTML',
+                protect_content: true,
+              }
+            );
+          }
+        } catch (error) {}
         data.log = String(forward_from_chat?.id);
         data = await data.save();
         generateCache();

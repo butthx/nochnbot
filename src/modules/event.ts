@@ -4,6 +4,8 @@ import { Composer, Context } from 'grammy';
 import isAdmin from '../utils/isAdmin';
 import generateCache from '../utils/cache';
 import fs from 'fs';
+import { buildMsg } from '../utils/buildMessage';
+
 export const bot = new Composer();
 bot.use(async (ctx, next) => {
   try {
@@ -49,17 +51,25 @@ bot.use(async (ctx, next) => {
         !ctx.message?.is_automatic_forward &&
         !ignore.includes(String(ctx.message?.sender_chat?.id))
       ) {
-        await ctx.api.deleteMessage(ctx.chat?.id!, ctx.message?.message_id!);
-        await ctx.banChatSenderChat(ctx.message?.sender_chat?.id);
-        if (log) {
+        if (log !== undefined) {
           try {
-            let msg = await ctx.api.forwardMessage(log!, ctx.chat?.id!, ctx.message?.message_id!, {
-              protect_content: true,
-              disable_notification: true,
-            });
+            let run_fwd = async () => {
+              try {
+                return await ctx.api.forwardMessage(log!, ctx.chat?.id!, ctx.message?.message_id!, {
+                  protect_content: true,
+                  disable_notification: true,
+                });
+              } catch (error: any) {
+                return await ctx.api.sendMessage(log!, await buildMsg(ctx), {
+                  protect_content: true,
+                  disable_notification: true,
+                });
+              }
+            };
+            let msg = await run_fwd();
             await ctx.api.sendMessage(
               msg.chat?.id!,
-              `forwarded message from <code>${ctx.chat?.type}</code> (<code>${ctx.chat?.id}</code>)\n#report`,
+              `message from <code>${ctx.chat?.type}</code> (<code>${ctx.chat?.id}</code>)\n#report`,
               {
                 reply_to_message_id: msg?.message_id,
                 parse_mode: 'HTML',
@@ -69,6 +79,8 @@ bot.use(async (ctx, next) => {
             );
           } catch (error) {}
         }
+        await ctx.api.deleteMessage(ctx.chat?.id!, ctx.message?.message_id!);
+        await ctx.banChatSenderChat(ctx.message?.sender_chat?.id);
       }
     }
     return next();
@@ -82,7 +94,7 @@ bot.on('message:new_chat_members', (ctx) => {
       let u = ctx.message.new_chat_members[0];
       if (u.id == ctx.me.id) {
         return ctx.reply(
-          `Hi Thanks you for adding me, i can delete message from user which using channel to sending message. also this user banned that channel from your group, so the owner can't use it again for sending message in your group.\nSource Code : https://github.com/butthx/nochnbot\nSupport Group : @butthxdiscuss`,
+          `Hi Thanks you for adding me, i can delete message from user which using channel to sending message. also this user banned that channel from your group, so the owner can't use it again for sending message in your group.`,
           {
             parse_mode: 'HTML',
             reply_to_message_id: ctx.message?.message_id,
