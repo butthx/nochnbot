@@ -35,11 +35,13 @@ let start_message = `Hi, i can delete message from user which using channel to s
 bot.callbackQuery('start', (ctx) => {
   try {
     if (ctx.me.id === 5093059646) {
-      //@ts-ignore
-      start_keyboard[2].push({
-        text: '⭐ Give Star',
-        callback_data: 'star',
-      });
+      if(start_keyboard[2].length <= 1) { 
+        //@ts-ignore
+        start_keyboard[2].push({
+          text: '⭐ Give Star',
+          callback_data: 'star',
+        });
+      } 
     } else {
       start_message += `\n\n<i>This bot is using source code of @nochannel_robot.</i>`;
     }
@@ -56,11 +58,13 @@ bot.callbackQuery('start', (ctx) => {
 bot.command('start', (ctx) => {
   try {
     if (ctx.me.id === 5093059646) {
-      //@ts-ignore
-      start_keyboard[2].push({
-        text: '⭐ Give Star',
-        callback_data: 'star',
-      });
+      if(start_keyboard[2].length <= 1) { 
+        //@ts-ignore
+        start_keyboard[2].push({
+          text: '⭐ Give Star',
+          callback_data: 'star',
+        });
+      } 
     } else {
       start_message += `\n\n<i>This bot is using source code of @nochannel_robot.</i>`;
     }
